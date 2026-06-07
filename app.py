@@ -3,91 +3,85 @@ import pandas as pd
 import plotly.express as px
 
 
-st.title("🏏 IPL Auction Analytics Dashboard")
+st.title("📈 Smart Analytics Tool")
 
 
-df = pd.read_csv("ipl_auction.csv")
-
-
-st.subheader("Dataset Preview")
-st.write(df.head())
-
-
-# Data Cleaning
-df.drop_duplicates(inplace=True)
-df.fillna("Unknown", inplace=True)
-
-
-# KPIs
-st.subheader("Key Metrics")
-
-col1, col2, col3 = st.columns(3)
-
-col1.metric("Total Players", len(df))
-col2.metric("Teams", df["Team"].nunique())
-col3.metric("Highest Price", df["Price"].max())
-
-
-# Filter
-st.sidebar.header("Filters")
-
-team = st.sidebar.multiselect(
-    "Select Team",
-    df["Team"].unique()
+# CSV Upload
+uploaded_file = st.file_uploader(
+    "Upload CSV File",
+    type=["csv"]
 )
 
-if team:
-    df = df[df["Team"].isin(team)]
+
+if uploaded_file is not None:
+
+    df = pd.read_csv(uploaded_file)
+
+    # Dataset Preview
+    st.header("Dataset Preview")
+    st.write(df.head())
 
 
-# Visualization 1
-fig1 = px.bar(
-    df,
-    x="Team",
-    y="Price",
-    title="Team Wise Spending"
-)
+    # Missing Values
+    st.header("Missing Value Analysis")
 
-st.plotly_chart(fig1)
+    missing = df.isnull().sum()
+
+    st.write(missing)
 
 
-# Visualization 2
-fig2 = px.pie(
-    df,
-    names="Role",
-    title="Player Role Distribution"
-)
+    # Statistics
+    st.header("Basic Statistical Summary")
 
-st.plotly_chart(fig2)
+    st.write(df.describe())
 
 
-# Visualization 3
-fig3 = px.bar(
-    df.sort_values("Price", ascending=False).head(10),
-    x="Player",
-    y="Price",
-    title="Top Expensive Players"
-)
-
-st.plotly_chart(fig3)
+    st.header("Dynamic Visualizations")
 
 
-# Visualization 4
-fig4 = px.histogram(
-    df,
-    x="Country",
-    title="Players Country Distribution"
-)
-
-st.plotly_chart(fig4)
+    numeric_columns = df.select_dtypes(
+        include=["number"]
+    ).columns
 
 
-# Visualization 5
-fig5 = px.scatter(
-    df,
-    x="Age",
-    y="Price",
-    title="Age vs Price"
-)
+    if len(numeric_columns) >= 2:
 
-st.plotly_chart(fig5)
+        # Chart 1
+        fig1 = px.scatter(
+            df,
+            x=numeric_columns[0],
+            y=numeric_columns[1],
+            title="Scatter Plot"
+        )
+
+        st.plotly_chart(fig1)
+
+
+        # Chart 2
+        fig2 = px.histogram(
+            df,
+            x=numeric_columns[0],
+            title="Histogram"
+        )
+
+        st.plotly_chart(fig2)
+
+
+        # Chart 3
+        fig3 = px.box(
+            df,
+            y=numeric_columns[0],
+            title="Box Plot"
+        )
+
+        st.plotly_chart(fig3)
+
+    else:
+        st.warning(
+            "Need at least 2 numeric columns for charts"
+        )
+
+
+else:
+
+    st.info("Please upload a CSV file to start analysis")

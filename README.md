@@ -1,60 +1,42 @@
-*# IPL Auction Analytics Dashboard*
+# IPL Auction Data Storytelling App
 
+## Project Overview
 
+This project is a data storytelling application built using Streamlit.
+It explains IPL auction data through analysis and visualizations.
 
-*## Project Overview*
+## Features
 
-*Interactive AI Dashboard built using Streamlit, Pandas and Plotly.*
+- Dataset Introduction
+- Dataset Preview
+- Exploratory Data Analysis
+- Visualizations
+- Insights and Findings
+- Conclusion
 
+## Visualizations
 
+1. Team Wise Spending
+2. Player Role Distribution
+3. Country Wise Auction Value
 
-*## Features*
+## Technologies Used
 
-*- Dataset Overview*
+- Python
+- Pandas
+- Plotly
+- Streamlit
 
-*- Data Cleaning*
+## How to Run
 
-*- KPI Metrics*
+Install requirements:
 
-*- Interactive Filters*
+pip install streamlit pandas plotly
 
-*- 5+ Visualizations*
+Run:
 
+streamlit run app.py
 
+## Dataset
 
-*## Technologies Used*
-
-*- Python*
-
-*- Pandas*
-
-*- Plotly*
-
-*- Streamlit*
-
-
-
-*## How to Run*
-
-
-
-*Install requirements:*
-
-
-
-*pip install -r requirements.txt*
-
-
-
-*Run:*
-
-
-
-*streamlit run app.py*
-
-
-
-*## Dataset*
-
-*IPL Auction Dataset*
-
+IPL Auction Dataset
